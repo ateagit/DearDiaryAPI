@@ -27,10 +27,10 @@ namespace DearDiaryLogs.Models
                             new DiaryLog
                             {
                                 EventName = "MSA time",
-                                EventStory = "During this time I did nothing",
+                                StoryUrl = "During this time I did nothing",
                                 StartTime = "19/10/2018 10:09:52 PM",
                                 EndTime = "19/10/2018 10:09:53 PM",
-                                Url = "https://example.com/url-to-progress-pic-img.jpg",
+                                ImageUrl = "https://example.com/url-to-progress-pic-img.jpg",
                                 Width = "680",
                                 Height = "680"
                             }

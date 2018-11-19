@@ -13,10 +13,10 @@ namespace DearDiaryLogs.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     EventName = table.Column<string>(nullable: true),
-                    EventStory = table.Column<string>(nullable: true),
+                    StoryUrl = table.Column<string>(nullable: true),
                     StartTime = table.Column<string>(nullable: true),
                     EndTime = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     Width = table.Column<string>(nullable: true),
                     Height = table.Column<string>(nullable: true)
                 },

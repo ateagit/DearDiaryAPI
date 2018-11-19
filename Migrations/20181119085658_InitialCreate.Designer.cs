@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DearDiaryLogs.Migrations
 {
     [DbContext(typeof(DearDiaryLogsContext))]
-    [Migration("20181118232103_InitialCreate")]
+    [Migration("20181119085658_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,13 +26,13 @@ namespace DearDiaryLogs.Migrations
 
                     b.Property<string>("EventName");
 
-                    b.Property<string>("EventStory");
-
                     b.Property<string>("Height");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("StartTime");
 
-                    b.Property<string>("Url");
+                    b.Property<string>("StoryUrl");
 
                     b.Property<string>("Width");
 

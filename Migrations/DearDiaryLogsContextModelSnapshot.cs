@@ -24,13 +24,13 @@ namespace DearDiaryLogs.Migrations
 
                     b.Property<string>("EventName");
 
-                    b.Property<string>("EventStory");
-
                     b.Property<string>("Height");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("StartTime");
 
-                    b.Property<string>("Url");
+                    b.Property<string>("StoryUrl");
 
                     b.Property<string>("Width");
 

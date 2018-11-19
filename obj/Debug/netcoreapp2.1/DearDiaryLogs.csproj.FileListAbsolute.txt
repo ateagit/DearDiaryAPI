@@ -3,7 +3,6 @@ C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\bin\Debug\netc
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\bin\Debug\netcoreapp2.1\DearDiaryLogs.runtimeconfig.dev.json
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\bin\Debug\netcoreapp2.1\DearDiaryLogs.dll
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\bin\Debug\netcoreapp2.1\DearDiaryLogs.pdb
-C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.csprojAssemblyReference.cache
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.csproj.CoreCompileInputs.cache
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.RazorAssemblyInfo.cache
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.RazorAssemblyInfo.cs
@@ -12,3 +11,4 @@ C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netc
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.RazorTargetAssemblyInfo.cache
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.dll
 C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.pdb
+C:\Users\AbinT\Documents\DearDiaryAPI\DearDiaryLogs\DearDiaryLogs\obj\Debug\netcoreapp2.1\DearDiaryLogs.csprojAssemblyReference.cache
