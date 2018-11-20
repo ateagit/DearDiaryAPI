@@ -33,7 +33,7 @@ namespace DearDiaryLogs.Controllers
         {
             return _context.DiaryLog.Include("Images");
         }
-        
+
         // GET: api/Diary/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDiaryLog([FromRoute] int id)
@@ -44,6 +44,26 @@ namespace DearDiaryLogs.Controllers
             }
 
             var diaryLog = await _context.DiaryLog.FindAsync(id);
+
+            if (diaryLog == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(diaryLog);
+        }
+
+        [Route("SearchByEventName/{Event}")]
+        [HttpGet]
+        public async Task<IActionResult> GetDiaryLog([FromRoute] String Event)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var diaryLog = await _context.DiaryLog.Where(s => s.EventName == "asd").ToListAsync();
 
             if (diaryLog == null)
             {
