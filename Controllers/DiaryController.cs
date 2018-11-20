@@ -31,9 +31,9 @@ namespace DearDiaryLogs.Controllers
         [HttpGet]
         public IEnumerable<DiaryLog> GetDiaryLog()
         {
-            return _context.DiaryLog;
+            return _context.DiaryLog.Include("Images");
         }
-
+        
         // GET: api/Diary/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDiaryLog([FromRoute] int id)
@@ -355,6 +355,7 @@ namespace DearDiaryLogs.Controllers
                 return NotFound();
             }
 
+            // By removing the diaryLog's, the images are also removed via the navigation property
             _context.DiaryLog.Remove(diaryLog);
             await _context.SaveChangesAsync();
 

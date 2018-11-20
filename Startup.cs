@@ -13,6 +13,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using DearDiaryLogs.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json;
+using System.Buffers;
 
 namespace DearDiaryLogs
 {
@@ -28,7 +31,16 @@ namespace DearDiaryLogs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.OutputFormatters.Clear();
+                options.OutputFormatters.Add(new JsonOutputFormatter(new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                }, ArrayPool<char>.Shared));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
 
             services.AddDbContext<DearDiaryLogsContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("DearDiaryLogsContext")));
