@@ -15,6 +15,26 @@ namespace DearDiaryLogs.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
+            modelBuilder.Entity("DearDiaryLogs.Models.DiaryImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EntryId");
+
+                    b.Property<string>("Height");
+
+                    b.Property<string>("ImageURL");
+
+                    b.Property<string>("Width");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntryId");
+
+                    b.ToTable("DiaryImage");
+                });
+
             modelBuilder.Entity("DearDiaryLogs.Models.DiaryLog", b =>
                 {
                     b.Property<int>("Id")
@@ -24,19 +44,21 @@ namespace DearDiaryLogs.Migrations
 
                     b.Property<string>("EventName");
 
-                    b.Property<string>("Height");
-
-                    b.Property<string>("ImageUrl");
-
                     b.Property<string>("StartTime");
 
                     b.Property<string>("StoryUrl");
 
-                    b.Property<string>("Width");
-
                     b.HasKey("Id");
 
                     b.ToTable("DiaryLog");
+                });
+
+            modelBuilder.Entity("DearDiaryLogs.Models.DiaryImage", b =>
+                {
+                    b.HasOne("DearDiaryLogs.Models.DiaryLog", "Entry")
+                        .WithMany("Images")
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

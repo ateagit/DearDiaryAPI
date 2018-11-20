@@ -114,7 +114,89 @@ namespace DearDiaryLogs.Controllers
             {
                 try
                 {
-                    // Read the image as a stream of data
+                    // A diaryEntry could have multiple files or None.
+
+                    // We have to store the URI of each file in the DiaryImage table with its , associated with a eventID.
+                    // Save the event ID in a variable.
+
+                    // Create a diary log and upload the details.
+                    // Make the Story URI
+                    /* if (not zero files)
+                     *   there is files
+                     *   go through each file
+                     *   upload the file to a blob and get the URI
+                     *   Put the URI along with the width/height in a new diary image instance with the eventID created
+                     *   Save changes 
+                    */
+
+                    CloudBlockBlob uploadedTextBlob = await UploadTextToBlob(diaryEntry.Story);
+                    int eventID;
+                    if(!string.IsNullOrEmpty(uploadedTextBlob.StorageUri.ToString()))
+                    {
+                        // Successfully uploaded Blob and identifier is found
+                        DiaryLog diaryLogInstance = new DiaryLog
+                        {
+                            EventName = diaryEntry.Event,
+                            StoryUrl = uploadedTextBlob.SnapshotQualifiedUri.AbsoluteUri,
+                            StartTime = diaryEntry.StartTime,
+                            EndTime = diaryEntry.EndTime   
+                        };
+
+
+                        _context.DiaryLog.Add(diaryLogInstance);
+
+                        await _context.SaveChangesAsync();
+                        eventID = diaryLogInstance.Id;
+                        // if 0 images, nothing will be attempted to upload
+                        if (diaryEntry.Images != null && diaryEntry.Images.Any())
+                        {
+                            
+                            foreach (IFormFile imageInstance in diaryEntry.Images)
+                            {
+                                // Read images as a stream of data so it can be uploaded to blob
+
+                                using (System.IO.Stream stream = imageInstance.OpenReadStream())
+                                {
+                                    // Create and upload a blob for the image.
+
+                                    CloudBlockBlob uploadedImageBlob = await UploadImageToBlob(imageInstance.FileName, null, stream);
+
+                                    string uploadedImageBlobURI = uploadedImageBlob.StorageUri.ToString();
+
+                                    if (!string.IsNullOrEmpty(uploadedImageBlobURI))
+                                    {
+                                        System.Drawing.Image uploadedImage = System.Drawing.Image.FromStream(stream);
+                                        // If there is a valid URI, then upload
+                                        DiaryImage diaryImageInstance = new DiaryImage
+                                        {
+                                            // Problem : This is trying to upload before primary key eventId is made
+                                            EntryId = eventID, 
+                                            ImageURL = uploadedImageBlob.SnapshotQualifiedUri.AbsoluteUri,
+                                            Height = uploadedImage.Height.ToString(),
+                                            Width = uploadedImage.Width.ToString()
+                                        };
+                                        // Add this new instance to the dbset (collection of entities) in memory
+                                        _context.DiaryImage.Add(diaryImageInstance);
+
+                                        
+                                    }
+                                }
+                            }
+                        }
+
+                        // Save all the changes to the database
+                        await _context.SaveChangesAsync();
+
+                        return Ok($"The file {diaryEntry.Event} has been succesfully uploaded");
+                       
+                    }
+                    else
+                    {
+                        return BadRequest("Error when uploading: Identifier not found. Please Try Again");
+                    }
+                    
+                    #region
+                    /*
                     using (System.IO.Stream stream = diaryEntry.Image.OpenReadStream())
                     {
                         // create and upload Blob for Image and Story
@@ -155,6 +237,8 @@ namespace DearDiaryLogs.Controllers
                             return Ok($"File: {diaryEntry.Event} has been successfully uploaded to the database");
                         }
                     }
+                    */
+                    #endregion
                 }
                 catch(Exception e)
                 {

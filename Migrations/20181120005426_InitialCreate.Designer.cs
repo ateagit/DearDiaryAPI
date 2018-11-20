@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DearDiaryLogs.Migrations
 {
     [DbContext(typeof(DearDiaryLogsContext))]
-    [Migration("20181119085658_InitialCreate")]
+    [Migration("20181120005426_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -16,6 +16,26 @@ namespace DearDiaryLogs.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+
+            modelBuilder.Entity("DearDiaryLogs.Models.DiaryImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EntryId");
+
+                    b.Property<string>("Height");
+
+                    b.Property<string>("ImageURL");
+
+                    b.Property<string>("Width");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntryId");
+
+                    b.ToTable("DiaryImage");
+                });
 
             modelBuilder.Entity("DearDiaryLogs.Models.DiaryLog", b =>
                 {
@@ -26,19 +46,21 @@ namespace DearDiaryLogs.Migrations
 
                     b.Property<string>("EventName");
 
-                    b.Property<string>("Height");
-
-                    b.Property<string>("ImageUrl");
-
                     b.Property<string>("StartTime");
 
                     b.Property<string>("StoryUrl");
 
-                    b.Property<string>("Width");
-
                     b.HasKey("Id");
 
                     b.ToTable("DiaryLog");
+                });
+
+            modelBuilder.Entity("DearDiaryLogs.Models.DiaryImage", b =>
+                {
+                    b.HasOne("DearDiaryLogs.Models.DiaryLog", "Entry")
+                        .WithMany("Images")
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

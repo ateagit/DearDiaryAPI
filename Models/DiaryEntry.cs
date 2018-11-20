@@ -12,6 +12,6 @@ namespace DearDiaryLogs.Models
         public string Story { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public IFormFile Image { get; set; }
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

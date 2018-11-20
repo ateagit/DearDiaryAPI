@@ -16,29 +16,36 @@ namespace DearDiaryLogs.Models
             // in this case, creates an instance of the DearDiaryLogsContext with the constructor being something pulled from the services DI container.
             using (var context = new DearDiaryLogsContext(serviceProvider.GetRequiredService<DbContextOptions<DearDiaryLogsContext>>()))
             {
-                if(context.DiaryLog.Count() > 0) // Sees how many entries in the DbSet IEnumerator?
+                int seedId = 0;
+                if(context.DiaryLog.Count() == 0) // Sees how many entries in the DbSet
                 {
-                    Console.WriteLine(context.GetType());
-                    return;
-                }
-                else
-                { // If there are no diary log entry, add a seed dummy entry so the db knows how to format the cols/rows
-                    context.DiaryLog.AddRange(
-                            new DiaryLog
-                            {
-                                EventName = "MSA time",
-                                StoryUrl = "During this time I did nothing",
-                                StartTime = "19/10/2018 10:09:52 PM",
-                                EndTime = "19/10/2018 10:09:53 PM",
-                                ImageUrl = "https://example.com/url-to-progress-pic-img.jpg",
-                                Width = "680",
-                                Height = "680"
-                            }
-                        );
+                    DiaryLog seedValues = new DiaryLog
+                    {
+                        EventName = "MSA time",
+                        StoryUrl = "During this time I did nothing",
+                        StartTime = "19/10/2018 10:09:52 PM",
+                        EndTime = "19/10/2018 10:09:53 PM",
+                    };
 
+                    context.DiaryLog.Add(seedValues);
+                    context.SaveChanges();
+
+                    seedId = seedValues.Id;
+                }
+                if (context.DiaryImage.Count() == 0)
+                {
+                    DiaryImage seedValues = new DiaryImage
+                    {
+                        EntryId = seedId,
+                        ImageURL = "https://example.com/url-to-progress-pic-img.jpg",
+                        Width = "10",
+                        Height = "20"
+                    };
+
+                    context.DiaryImage.Add(seedValues);
                     context.SaveChanges();
                 }
-                
+                return;
             }
         }
     }

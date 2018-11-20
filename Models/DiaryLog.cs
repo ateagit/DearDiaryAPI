@@ -13,8 +13,7 @@ namespace DearDiaryLogs.Models
         public string StoryUrl { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public string ImageUrl { get; set; }
-        public string Width { get; set; }
-        public string Height { get; set; }
+
+        public virtual ICollection<DiaryImage> Images { get; set; } // a navigation property that links the images to a log.
     }
 }
