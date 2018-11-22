@@ -55,7 +55,7 @@ namespace DearDiaryLogs.Controllers
 
         [Route("SearchByEventName/{Event}")]
         [HttpGet]
-        public async Task<IActionResult> GetDiaryLog([FromRoute] String Event)
+        public async Task<IActionResult> GetLogByEvent([FromRoute] String Event)
         {
 
             if (!ModelState.IsValid)
@@ -71,6 +71,17 @@ namespace DearDiaryLogs.Controllers
             }
 
             return Ok(diaryLog);
+        }
+
+        [Route("distinctDates")]
+        [HttpGet]
+        public async Task<List<string>> GetDistinctDates()
+        {
+
+
+            var diaryLog = await _context.DiaryLog.Select(s => s.StartTime).Distinct().ToListAsync();
+
+            return diaryLog;
         }
 
         // PUT: api/Diary/5
