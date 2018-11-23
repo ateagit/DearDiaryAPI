@@ -75,9 +75,9 @@ namespace DearDiaryLogs.Controllers
             return Ok(userInfo.First().Id);
         }
 
-        [Route("SearchByEventName/{Event}")]
+        [Route("SearchByEventName/{Event}/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetLogByEvent([FromRoute] String Event)
+        public async Task<IActionResult> GetLogByEvent([FromRoute] String Event, int id)
         {
 
             if (!ModelState.IsValid)
@@ -85,14 +85,15 @@ namespace DearDiaryLogs.Controllers
                 return BadRequest(ModelState);
             }
 
-            var diaryLog = await _context.DiaryLog.Where(s => s.EventName == Event).ToListAsync();
+            var userLog = await _context.DiaryLog.Include("Images").Where(s => s.UserId == id && s.EventName == Event).ToListAsync();
+            //var diaryLog = await _context.DiaryLog.Where(s => s.EventName == Event).ToListAsync();
 
-            if (diaryLog == null)
+            if (userLog == null)
             {
                 return NotFound();
             }
 
-            return Ok(diaryLog);
+            return Ok(userLog);
         }
 
         [Route("distinctDates")]
