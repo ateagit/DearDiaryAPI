@@ -53,6 +53,28 @@ namespace DearDiaryLogs.Controllers
             return Ok(diaryLog);
         }
 
+        [HttpPost, Route("CheckUser")]
+        public async Task<IActionResult> GetID([FromForm] UserEntry user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //var diaryLog = await _context.Users.Include("DiaryLogs").Where(s => s.Id == id).ToListAsync();
+            
+            var userInfo = await _context.Users.Where(s => (s.Username == user.Username && s.Password == user.Password)).ToListAsync();
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+            else if (!userInfo.Any())
+            {
+                return Ok(new List<string>());
+            }
+            return Ok(userInfo.First().Id);
+        }
+
         [Route("SearchByEventName/{Event}")]
         [HttpGet]
         public async Task<IActionResult> GetLogByEvent([FromRoute] String Event)
