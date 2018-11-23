@@ -96,13 +96,13 @@ namespace DearDiaryLogs.Controllers
             return Ok(userLog);
         }
 
-        [Route("distinctDates")]
+        [Route("distinctDates/{id}")]
         [HttpGet]
-        public async Task<List<string>> GetDistinctDates()
+        public async Task<List<string>> GetDistinctDates([FromRoute] int id)
         {
 
-
-            var diaryLog = await _context.DiaryLog.Select(s => s.StartTime).Distinct().ToListAsync();
+            
+            var diaryLog = await _context.DiaryLog.Where(s=>s.UserId == id).Select(s => s.StartTime).Distinct().ToListAsync();
 
             return diaryLog;
         }
