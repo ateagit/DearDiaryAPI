@@ -15,8 +15,10 @@ namespace DearDiaryLogs.Models
         {
         }
 
-        //DbSet objects represent collections of entities in memory. Must be saved to show changes in database
+        //DbSet objects represent collections of entities IN LOCAL MEMORY. Must be saved to show changes in database
+        public DbSet<DearDiaryLogs.Models.Users> Users { get; set; }
         public DbSet<DearDiaryLogs.Models.DiaryLog> DiaryLog { get; set; } // DbSet represents an entity that can use CRUD operations
         public DbSet<DearDiaryLogs.Models.DiaryImage> DiaryImage { get; set; }
+        
     }
 }

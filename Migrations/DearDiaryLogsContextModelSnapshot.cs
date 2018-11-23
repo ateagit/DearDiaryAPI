@@ -48,9 +48,27 @@ namespace DearDiaryLogs.Migrations
 
                     b.Property<string>("StoryUrl");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("DiaryLog");
+                });
+
+            modelBuilder.Entity("DearDiaryLogs.Models.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DearDiaryLogs.Models.DiaryImage", b =>
@@ -58,6 +76,14 @@ namespace DearDiaryLogs.Migrations
                     b.HasOne("DearDiaryLogs.Models.DiaryLog", "Entry")
                         .WithMany("Images")
                         .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DearDiaryLogs.Models.DiaryLog", b =>
+                {
+                    b.HasOne("DearDiaryLogs.Models.Users", "User")
+                        .WithMany("DiaryLogs")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

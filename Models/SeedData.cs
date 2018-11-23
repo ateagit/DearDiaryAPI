@@ -17,11 +17,30 @@ namespace DearDiaryLogs.Models
             using (var context = new DearDiaryLogsContext(serviceProvider.GetRequiredService<DbContextOptions<DearDiaryLogsContext>>()))
             {
                 int seedId = 0;
+                if(context.Users.Count() == 0) // Check how many entries in DbSet (collection of objects locally)
+                {
+                    Users seedValues = new Users
+                    {
+                        Username = "randUser",
+                        Password = "randPass"
+                    };
+
+                    // Create an instance of users reprenting one user.
+
+                    // Add to context (local memory)
+                    context.Add(seedValues);
+
+                    // Save (push) to db
+                    context.SaveChanges();
+
+                    seedId = seedValues.Id;
+                }
                 if(context.DiaryLog.Count() == 0) // Sees how many entries in the DbSet
                 {
                     DiaryLog seedValues = new DiaryLog
                     {
                         EventName = "MSA time",
+                        UserId = seedId,
                         StoryUrl = "During this time I did nothing",
                         StartTime = "19/10/2018 10:09:52 PM",
                         EndTime = "19/10/2018 10:09:53 PM",

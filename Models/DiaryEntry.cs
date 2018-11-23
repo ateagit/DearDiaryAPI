@@ -8,6 +8,8 @@ namespace DearDiaryLogs.Models
 {
     public class DiaryEntry
     {
+        // A model representing what we get from the user during uploads
+        public int UserID { get; set; }
         public string Event { get; set; }
         public string Story { get; set; }
         public string StartTime { get; set; }

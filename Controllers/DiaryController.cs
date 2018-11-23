@@ -43,8 +43,8 @@ namespace DearDiaryLogs.Controllers
                 return BadRequest(ModelState);
             }
 
-            var diaryLog = await _context.DiaryLog.FindAsync(id);
-
+            //var diaryLog = await _context.Users.Include("DiaryLogs").Where(s => s.Id == id).ToListAsync();
+            var diaryLog = await _context.DiaryLog.Include("Images").Where(s => s.UserId == id).ToListAsync();
             if (diaryLog == null)
             {
                 return NotFound();
@@ -134,6 +134,38 @@ namespace DearDiaryLogs.Controllers
             return CreatedAtAction("GetDiaryLog", new { id = diaryLog.Id }, diaryLog);
         }
 
+        [HttpPost, Route("CreateUser")]
+        public async Task<IActionResult> CreateUser([FromForm] UserEntry userEntry)
+        {
+            if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
+            {
+                return BadRequest($"Expected a multipart request, but got {Request.ContentType}");
+            }
+            else
+            {
+                try
+                {
+                    // To create a user, create a User from the UserEntry
+                    // Add and save the changes
+
+                    Users newUser = new Users
+                    {
+                        Username = userEntry.Username,
+                        Password = userEntry.Password
+                    };
+
+                    _context.Add(newUser);
+                    await _context.SaveChangesAsync();
+
+                    return Ok(newUser.Id);
+                }
+                catch(Exception e)
+                {
+                    return BadRequest($"An error has occured g: {e.Message}");
+                }
+            }
+        }
+
         [HttpPost, Route("Upload")]
         public async Task<IActionResult> UploadAndPost([FromForm] DiaryEntry diaryEntry)
         {
@@ -165,6 +197,7 @@ namespace DearDiaryLogs.Controllers
                     // Successfully uploaded Blob and identifier is found
                     DiaryLog diaryLogInstance = new DiaryLog
                     {
+                        UserId = diaryEntry.UserID,
                         EventName = diaryEntry.Event,
                         StoryUrl = diaryEntry.Story,
                         StartTime = diaryEntry.StartTime,
